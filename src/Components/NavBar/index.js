@@ -1,41 +1,40 @@
 import React from "react";
+import { NavLink, withRouter } from "react-router-dom";
+
 import "./style.scss";
 
 const NavBar = props => {
+  console.log(props);
   return (
-    <nav className="nav-bar">
+    <nav
+      className={props.location.pathname === "/" ? "nav-bar" : "nav-bar white"}
+    >
       <div className="container">
-        {/* <div className="nav-bar__logo">
-          <a href="/" className="nav-bar__logo--link">
-            HMC
-          </a>
-        </div> */}
         <ul className="nav-bar__items">
           <li className="nav-bar__link">
-            <a href="/" className="nav-bar__item">
+            <NavLink to="/" exact className="nav-bar__item">
               Home
-            </a>
+            </NavLink>
           </li>
           <li className="nav-bar__link">
-            <a href="/dashboard" className="nav-bar__item">
+            <NavLink to="/dashboard" className="nav-bar__item">
               Dashboard
-            </a>
+            </NavLink>
           </li>
           <li className="nav-bar__link">
-            <a href="policies" className="nav-bar__item">
+            <NavLink to="/policies" className="nav-bar__item">
               Policies
-            </a>
+            </NavLink>
           </li>
           <li className="nav-bar__link">
-            <a href="snail-mail" className="nav-bar__item">
+            <NavLink to="/snailmail" className="nav-bar__item">
               Snail Mail
-            </a>
+            </NavLink>
           </li>
         </ul>
-        <div>Login</div>
       </div>
     </nav>
   );
 };
 
-export default NavBar;
+export default withRouter(NavBar);
