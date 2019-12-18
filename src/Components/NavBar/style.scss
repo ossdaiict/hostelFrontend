@@ -1,15 +1,17 @@
 .nav-bar {
   color: var(--color-white);
+  // background-color: orange;
+  height: 12vh;
   background-color: var(--color-primary-dark);
   // color: var(--color-primary-dark);
   // background-color: var(--color-white);
-  &__logo {
-    font-size: 3.5rem;
-    &--link {
-      color: var(--color-primary-dark);
-      text-decoration: none;
-    }
-  }
+  // &__logo {
+  //   font-size: 3.5rem;
+  //   &--link {
+  //     color: var(--color-primary-dark);
+  //     text-decoration: none;
+  //   }
+  // }
   &__items {
     display: flex;
     list-style: none;
@@ -22,6 +24,7 @@
     text-decoration: none;
     color: currentColor;
     font-size: 1.8rem;
+    font-weight: bold;
     margin: auto 1rem;
   }
   &__item::before {
@@ -42,14 +45,6 @@
   }
 }
 
-.white {
-  color: var(--color-primary-dark) !important;
-  background-color: var(--color-white) !important;
-  .nav-bar__item::before {
-    background-color: var(--color-primary-dark);
-  }
-}
-
 .active::before {
   transform: scaleY(1);
   width: 100%;
@@ -62,4 +57,43 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.user-navbar {
+  font-size: 2rem;
+  border: 2px var(--color-white) solid;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  &__login {
+    color: var(--color-white);
+    font-weight: bold;
+  }
+  &:hover {
+    background-color: var(--color-white);
+    .user-navbar__login {
+      color: var(--color-primary-dark);
+    }
+  }
+}
+
+.white {
+  color: var(--color-primary-dark) !important;
+  background-color: var(--color-white) !important;
+  box-shadow: var(--shadow-dark);
+  .nav-bar__item::before {
+    background-color: var(--color-primary-dark);
+  }
+  .user-navbar {
+    border-color: var(--color-primary-dark);
+    &__login {
+      color: var(--color-primary-dark);
+    }
+    &:hover {
+      background-color: var(--color-primary-dark);
+      .user-navbar__login {
+        color: var(--color-white);
+      }
+    }
+  }
 }

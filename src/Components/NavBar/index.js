@@ -32,6 +32,11 @@ const NavBar = props => {
             </NavLink>
           </li>
         </ul>
+        <NavLink to="/login" className="user-navbar">
+          <div className="user-navbar__login">
+            <span className="user-navbar__login--text">Login</span>
+          </div>
+        </NavLink>
       </div>
     </nav>
   );

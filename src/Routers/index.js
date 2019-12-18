@@ -17,13 +17,13 @@ const RouterPage = () => {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path="/dashboard" exact>
+        <Route path="/dashboard">
           <Dashboard />
         </Route>
-        <Route path="/policies" exact>
+        <Route path="/policies">
           <Policies />
         </Route>
-        <Route path="/snailmail" exact>
+        <Route path="/snailmail">
           <SnailMail />
         </Route>
       </Switch>
