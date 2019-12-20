@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { NavLink, Route, Switch, withRouter } from "react-router-dom";
 
 import PolicyPage from "./PolicyFiles";
 

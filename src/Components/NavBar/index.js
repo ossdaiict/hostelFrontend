@@ -1,7 +1,9 @@
 import React from "react";
-import { NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import "./style.scss";
+// import BackDrop from "./BackDrop";
+import SideDrawer from "./SideDrawer";
 
 const NavBar = props => {
   console.log(props);
@@ -10,7 +12,7 @@ const NavBar = props => {
       className={props.location.pathname === "/" ? "nav-bar" : "nav-bar white"}
     >
       <div className="container">
-        <ul className="nav-bar__items">
+        {/* <ul className="nav-bar__items">
           <li className="nav-bar__link">
             <NavLink to="/" exact className="nav-bar__item">
               Home
@@ -31,12 +33,14 @@ const NavBar = props => {
               Snail Mail
             </NavLink>
           </li>
-        </ul>
-        <NavLink to="/login" className="user-navbar">
+        </ul> */}
+        <SideDrawer />
+        {/* <BackDrop /> */}
+        {/* <NavLink to="/login" className="user-navbar">
           <div className="user-navbar__login">
             <span className="user-navbar__login--text">Login</span>
           </div>
-        </NavLink>
+        </NavLink> */}
       </div>
     </nav>
   );
