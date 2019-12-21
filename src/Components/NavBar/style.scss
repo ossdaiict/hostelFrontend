@@ -14,7 +14,8 @@
   //   }
   // }
   &__items {
-    display: flex;
+    // display: flex;
+    display: none;
     list-style: none;
   }
   &__link {
@@ -99,15 +100,16 @@
       }
     }
   }
+  .bar__line {
+    background-color: var(--color-primary-dark);
+  }
 }
 
 .bar {
   height: 3rem;
   width: 3rem;
-  // color: white;
-  // background-color: red;
   background-color: transparent;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-evenly;
   outline: none;
@@ -117,5 +119,17 @@
     width: 100%;
     border-radius: 1rem;
     background-color: white;
+  }
+}
+
+@media (max-width: 700px) {
+  .bar {
+    display: flex;
+  }
+}
+
+@media (min-width: 701px) {
+  .nav-bar__items {
+    display: flex;
   }
 }

@@ -38,7 +38,7 @@ class NavBar extends React.Component {
       >
         <div className="container">
           {Bar}
-          {/* <ul className="nav-bar__items">
+          <ul className="nav-bar__items">
             <li className="nav-bar__link">
               <NavLink to="/" exact className="nav-bar__item">
                 Home
@@ -59,7 +59,7 @@ class NavBar extends React.Component {
                 Snail Mail
               </NavLink>
             </li>
-          </ul> */}
+          </ul>
           <SideDrawer isSideDrawerOpen={this.state.isSideDrawerOpen} />
           {backDrop}
           <NavLink to="/login" className="user-navbar">

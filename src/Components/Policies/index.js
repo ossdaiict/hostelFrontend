@@ -12,7 +12,7 @@ class Policies extends Component {
       <div className="policy-page">
         <div className="side-navbar">
           <NavLink to={`${url}/rules`} className="side-navbar__item">
-            Rules and Regulation
+            Rules & Regulation
           </NavLink>
           <NavLink to={`${url}/computer`} className="side-navbar__item">
             Computer Policy
