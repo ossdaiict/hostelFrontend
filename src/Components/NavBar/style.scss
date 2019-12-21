@@ -100,3 +100,22 @@
     }
   }
 }
+
+.bar {
+  height: 3rem;
+  width: 3rem;
+  // color: white;
+  // background-color: red;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  outline: none;
+  cursor: pointer;
+  &__line {
+    height: 0.3rem;
+    width: 100%;
+    border-radius: 1rem;
+    background-color: white;
+  }
+}

@@ -1,20 +1,26 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Accordion, AccordionItem } from "react-sanfona";
-import mySvg from "../../../assets/downNavigation.svg";
+import Navigation from "../../../assets/downNavigation.svg";
 
 import "./style.scss";
 
-const SideDrawer = () => {
+const SideDrawer = props => {
   const PolicyTitle = (
     <div className="accordion__title">
       <span className="accordion__title--text">Policies</span>
-      <img src={mySvg} alt="Navigation" className="accordion__title--logo" />
+      <img
+        src={Navigation}
+        alt="Navigation"
+        className="accordion__title--logo"
+      />
     </div>
   );
 
   return (
-    <div className="side-drawer">
+    <div
+      className={!props.isSideDrawerOpen ? "side-drawer" : "side-drawer open"}
+    >
       <ul className="side-drawer__items">
         <Accordion className="accordion">
           <li className="side-drawer__link">

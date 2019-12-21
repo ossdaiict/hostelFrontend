@@ -6,6 +6,8 @@
   height: 100%;
   width: 50%;
   background-color: rgba(0, 0, 0, 0.8);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-in;
   &__items {
     height: 70%;
   }
@@ -18,6 +20,10 @@
     font-weight: bold;
     font-size: 2rem;
   }
+}
+
+.side-drawer.open {
+  transform: translateX(0);
 }
 
 .accordion {
