@@ -6,6 +6,7 @@ import NavBar from "../Components/NavBar";
 import Dashboard from "../Components/Dashboard";
 import Policies from "../Components/Policies";
 import SnailMail from "../Components/SnailMail";
+import Login from "../Components/Auth/Login";
 
 import "./style.scss";
 
@@ -27,6 +28,9 @@ const RouterPage = () => {
         </Route>
         <Route path="/snailmail">
           <SnailMail />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
       </Switch>
     </div>
