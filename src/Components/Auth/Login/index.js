@@ -1,53 +1,72 @@
 import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { NavLink } from "react-router-dom";
 
 import "./style.scss";
 
 const LoginForm = ({ errors, touched, handleSubmit, isSubmitting }) => (
-  <div className="form">
-    <Form onSubmit={handleSubmit} className="login-form">
-      <div className="form__wrapper">
-        <label htmlFor="studentID" className="form__label">
-          Student ID
-        </label>
-        <Field
-          type="id"
-          name="studentId"
-          placeholder="Student ID"
-          className="login-form__input"
-        />
-        {touched.studentId && errors.studentId && (
-          <div className="form__error">{errors.studentId}</div>
-        )}
-        {console.log(errors)}
-      </div>
-      <div className="form__wrapper">
-        <label htmlFor="studentID" className="form__label">
-          Password
-        </label>
-        <Field
-          type="password"
-          name="password"
-          placeholder="Password"
-          className="login-form__input"
-        />
-        {touched.password && errors.password && (
-          <div className="form__error">{errors.password}</div>
-        )}
-      </div>
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="login-form__submit"
-      >
-        Submit
-      </button>
-    </Form>
+  <div className="login-form__container">
+    <div className="form">
+      <Form onSubmit={handleSubmit} className="login-form">
+        <div className="form__wrapper">
+          <label htmlFor="studentID" className="form__label">
+            Student ID
+          </label>
+          <Field
+            type="id"
+            name="studentId"
+            placeholder="Student ID"
+            className="form__input"
+          />
+          {touched.studentId && errors.studentId && (
+            <div className="form__error">{errors.studentId}</div>
+          )}
+        </div>
+        <div className="form__wrapper">
+          <label htmlFor="studentID" className="form__label">
+            Password
+          </label>
+          <Field
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="form__input"
+          />
+          {touched.password && errors.password && (
+            <div className="form__error">{errors.password}</div>
+          )}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%"
+          }}
+        >
+          <button
+            disabled={isSubmitting}
+            type="submit"
+            className="login-form__submit"
+          >
+            Log in
+          </button>
+          <NavLink to="/forgot-password">
+            <span style={{ fontSize: "1.35rem", marginRight: "2rem" }}>
+              Forget Password ?
+            </span>
+          </NavLink>
+        </div>
+        <div>
+          <NavLink to="/register">Register New Account ?</NavLink>
+        </div>
+      </Form>
+    </div>
   </div>
 );
 
-const FormikLogin = withFormik({
+const FormikEnhance = withFormik({
   mapPropsToValues: ({ studentId, password }) => {
     return {
       studentId: studentId || "",
@@ -83,4 +102,4 @@ const FormikLogin = withFormik({
   }
 })(LoginForm);
 
-export default FormikLogin;
+export default FormikEnhance;

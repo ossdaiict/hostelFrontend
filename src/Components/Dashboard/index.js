@@ -1,7 +1,37 @@
 import React, { Component } from "react";
+import { NavLink, Route, Switch, withRouter } from "react-router-dom";
 
-export default class Dashboard extends Component {
+import AddSnail from "../SnailMail/AddSnail";
+
+class Dashboard extends Component {
   render() {
-    return <div>Dashboard</div>;
+    const { url, path } = this.props.match;
+    return (
+      <div className="policy-page">
+        <div className="side-navbar">
+          <NavLink to={`${url}/add-snail`} className="side-navbar__item">
+            Add Snail
+          </NavLink>
+        </div>
+        <div className="policies">
+          <Switch>
+            <Route path={`${path}/add-snail`}>
+              <AddSnail />
+            </Route>
+            {/* <Route path={`${path}/computer`}>
+              <PolicyPage page="./Rules2.md" />
+            </Route>
+            <Route path={`${path}/cooler`}>
+              <PolicyPage page="./Rules3.md" />
+            </Route>
+            <Route path={`${path}/snailmail`}>
+              <PolicyPage page="./Procedures.md" />
+            </Route> */}
+          </Switch>
+        </div>
+      </div>
+    );
   }
 }
+
+export default withRouter(Dashboard);

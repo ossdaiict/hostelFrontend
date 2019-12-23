@@ -73,7 +73,8 @@
     color: var(--color-white);
     font-weight: bold;
   }
-  &:hover {
+  &:hover,
+  &:active {
     background-color: var(--color-white);
     .user-navbar__login {
       color: var(--color-primary-dark);
