@@ -1,5 +1,5 @@
 import React from "react";
-import { useTable } from "react-table";
+import { useTable, useGlobalFilter } from "react-table";
 import "./style.scss";
 
 class SnailMail extends React.Component {
@@ -14,63 +14,95 @@ class SnailMail extends React.Component {
     });
   }
 
+  handleDelete = rowProps => {
+    console.log(rowProps);
+  };
+
   render() {
     const defaultPropGetter = () => ({});
 
-    const Table = ({
-      columns,
-      data,
-      getRowProps = defaultPropGetter,
-      getCellProps = defaultPropGetter
-    }) => {
+    const GlobalFilter = ({ globalFilter, setGlobalFilter }) => {
+      return (
+        <span
+          style={{ margin: "1rem", display: "block", fontSize: "1.6rem" }}
+          className="form__label"
+        >
+          Search:{" "}
+          <input
+            value={globalFilter || ""}
+            onChange={e => {
+              setGlobalFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+            }}
+            placeholder="Search..."
+            className="form__input"
+          />
+        </span>
+      );
+    };
+
+    const Table = ({ columns, data, getRowProps = defaultPropGetter }) => {
       const {
         getTableProps,
         getTableBodyProps,
         headerGroups,
         rows,
-        prepareRow
-      } = useTable({
-        columns,
-        data
-      });
+        prepareRow,
+        state,
+        preGlobalFilteredRows,
+        setGlobalFilter
+      } = useTable(
+        {
+          columns,
+          data
+        },
+        useGlobalFilter
+      );
 
       return (
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th
-                    {...column.getHeaderProps([
-                      {
-                        className: column.className,
-                        style: column.style
-                      }
-                    ])}
-                  >
-                    {column.render("Header")}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps(getRowProps(row))}>
-                  {row.cells.map(cell => {
-                    return (
-                      <td {...cell.getCellProps(getCellProps(cell))}>
-                        {cell.render("Cell")}
-                      </td>
-                    );
-                  })}
+        <>
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            globalFilter={state.globalFilter}
+            setGlobalFilter={setGlobalFilter}
+          />
+          <table {...getTableProps()}>
+            <thead>
+              {headerGroups.map(headerGroup => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map(column => (
+                    <th
+                      {...column.getHeaderProps([
+                        {
+                          className: column.className,
+                          style: column.style
+                        }
+                      ])}
+                    >
+                      {/* {column.render("Header")} */}
+                      {/* {!column.id === "Action" */}
+                      {column.render("Header")}
+                      {/* : column.getToggleHiddenProps()} */}
+                    </th>
+                  ))}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row, i) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps(getRowProps(row))}>
+                    {row.cells.map(cell => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
       );
     };
     const columns = [
@@ -105,6 +137,11 @@ class SnailMail extends React.Component {
       {
         Header: "Type",
         accessor: "type"
+      },
+      {
+        Header: "Action",
+        Cell: () => <button>Delete</button>,
+        isAuth: true
       }
     ];
 
@@ -114,10 +151,7 @@ class SnailMail extends React.Component {
           columns={columns}
           data={this.state.data}
           getRowProps={row => ({
-            onClick: () => console.log("row props", row)
-          })}
-          getCellProps={cellInfo => ({
-            onClick: () => console.log("cell props", cellInfo)
+            onClick: () => this.handleDelete(row.original)
           })}
         />
       </div>

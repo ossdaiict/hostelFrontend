@@ -3,23 +3,23 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   overflow-y: scroll;
-  font-size: 1.4rem;
-  padding-top: 10rem;
+  font-size: 1.35rem;
+  padding-top: 1em;
   table {
-    flex: 1 1 auto;
     border-collapse: collapse;
-    width: 100%;
+    width: 95%;
     th,
     td {
-      padding: 0.9rem;
+      padding: 1rem;
       text-align: center;
       border-bottom: 1px solid #ddd;
     }
     th {
       font-size: 1.6rem;
       font-weight: bold;
-      padding: 1.5rem;
+      padding: 1.4rem;
     }
     tr:hover {
       background-color: #f5f5ff;
