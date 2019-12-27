@@ -148,7 +148,7 @@ class SnailMail extends React.Component {
       {
         Header: "Action",
         id: "action",
-        Cell: () => <button>Delete</button>,
+        Cell: () => <button className="button__delete">Delete</button>,
         isAuth: true
       }
     ];
