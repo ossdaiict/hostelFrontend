@@ -27,7 +27,7 @@ const RouterPage = () => {
           <Policies />
         </Route>
         <Route path="/snailmail">
-          <SnailMail />
+          <SnailMail isAdmin={false} />
         </Route>
         <Route path="/login">
           <Login />

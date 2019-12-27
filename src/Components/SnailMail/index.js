@@ -40,7 +40,7 @@ class SnailMail extends React.Component {
       );
     };
 
-    const Table = ({ columns, data, getRowProps = defaultPropGetter }) => {
+    const Table = ({ columns, data, getCellProps = defaultPropGetter }) => {
       const {
         getTableProps,
         getTableBodyProps,
@@ -78,10 +78,13 @@ class SnailMail extends React.Component {
                         }
                       ])}
                     >
-                      {/* {column.render("Header")} */}
-                      {/* {!column.id === "Action" */}
+                      {/* {console.log(this.props.isAdmin)} */}
+                      {!this.props.isAdmin
+                        ? column.id === "action"
+                          ? column.toggleHidden()
+                          : null
+                        : null}
                       {column.render("Header")}
-                      {/* : column.getToggleHiddenProps()} */}
                     </th>
                   ))}
                 </tr>
@@ -91,10 +94,14 @@ class SnailMail extends React.Component {
               {rows.map((row, i) => {
                 prepareRow(row);
                 return (
-                  <tr {...row.getRowProps(getRowProps(row))}>
+                  <tr {...row.getRowProps()}>
                     {row.cells.map(cell => {
+                      let cellProps = props =>
+                        props.column.id === "action" ? getCellProps(props) : {};
                       return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                        <td {...cell.getCellProps(cellProps(cell))}>
+                          {cell.render("Cell")}
+                        </td>
                       );
                     })}
                   </tr>
@@ -140,6 +147,7 @@ class SnailMail extends React.Component {
       },
       {
         Header: "Action",
+        id: "action",
         Cell: () => <button>Delete</button>,
         isAuth: true
       }
@@ -150,8 +158,8 @@ class SnailMail extends React.Component {
         <Table
           columns={columns}
           data={this.state.data}
-          getRowProps={row => ({
-            onClick: () => this.handleDelete(row.original)
+          getCellProps={cell => ({
+            onClick: () => this.handleDelete(cell.row.original.sid)
           })}
         />
       </div>
