@@ -66,7 +66,7 @@ const LoginForm = ({ errors, touched, handleSubmit, isSubmitting }) => (
             </span>
           </NavLink>
         </div>
-        <div classNam="form__text">
+        <div className="form__text">
           <NavLink to="/register" className="form__text--link">
             Register New Account ?
           </NavLink>

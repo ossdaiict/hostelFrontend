@@ -3,7 +3,7 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 
 const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
-  <div className="form">
+  <div className="form" style={{ height: "88vh", overflowY: "scroll" }}>
     <Form onSubmit={handleSubmit} className="login-form">
       <h1 style={{ textAlign: "center", margin: "3.5rem", fontSize: "3rem" }}>
         Register Account
@@ -85,7 +85,6 @@ const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
           {errors.wing && touched.wing && (
             <div className="form__error">{errors.wing}</div>
           )}
-          {console.log(values)}
         </div>
         <div className="form__wrapper">
           <label htmlFor="roomNo" className="form__label">
@@ -103,6 +102,23 @@ const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
         </div>
       </div>
 
+      <div className="form__side-wrapper">
+        <div className="form__wrapper">
+          <label htmlFor="password" className="form__label">
+            Password
+          </label>
+          <Field
+            type="password"
+            name="password"
+            placeholder="Password"
+            className="form__input"
+          />
+          {touched.password && errors.password && (
+            <div className="form__error">{errors.password}</div>
+          )}
+        </div>
+      </div>
+
       <button
         disabled={isSubmitting}
         type="submit"
@@ -115,13 +131,14 @@ const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
 );
 
 const FormikEnhance = withFormik({
-  mapPropsToValues: ({ studentId, fname, lname, room, wing }) => {
+  mapPropsToValues: ({ studentId, fname, lname, room, wing, password }) => {
     return {
       studentId: studentId || "",
       fname: fname || "",
       lname: lname || "",
       wing: wing || "",
-      room: room || ""
+      room: room || "",
+      password: password || ""
     };
   },
   validationSchema: Yup.object().shape({
@@ -136,7 +153,20 @@ const FormikEnhance = withFormik({
       })
       .min(200000000, "Invalide ID")
       .max(209909999, "Invalide ID"),
-    wing: Yup.string().required("Wing is required")
+    fname: Yup.string()
+      .required("First name is required")
+      .max(20),
+    lname: Yup.string()
+      .required("Last name is required")
+      .max(20),
+    room: Yup.number("Room No must be number")
+      .required("Room No. is required")
+      .min(100)
+      .max(999),
+    wing: Yup.string().required("Wing is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must be 6 digit long")
   }),
   handleSubmit: (values, { resetForm, setSubmitting, setErrors }) => {
     setTimeout(() => {
