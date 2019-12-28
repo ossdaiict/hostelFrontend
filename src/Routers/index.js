@@ -7,6 +7,7 @@ import Dashboard from "../Components/Dashboard";
 import Policies from "../Components/Policies";
 import SnailMail from "../Components/SnailMail";
 import Login from "../Components/Auth/Login";
+import SignUp from "../Components/Auth/SignUp";
 
 import "./style.scss";
 
@@ -27,10 +28,13 @@ const RouterPage = () => {
           <Policies />
         </Route>
         <Route path="/snailmail">
-          <SnailMail isAdmin={false} />
+          <SnailMail isAdmin={false} styled={{ overflowY: "auto" }} />
         </Route>
         <Route path="/login">
           <Login />
+        </Route>
+        <Route path="/register">
+          <SignUp />
         </Route>
       </Switch>
     </div>

@@ -52,14 +52,24 @@ const LoginForm = ({ errors, touched, handleSubmit, isSubmitting }) => (
           >
             Log in
           </button>
-          <NavLink to="/forgot-password">
-            <span style={{ fontSize: "1.35rem", marginRight: "2rem" }}>
+          <NavLink
+            to="/forgot-password"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <span
+              style={{
+                fontSize: "1.35rem",
+                marginRight: "2rem"
+              }}
+            >
               Forget Password ?
             </span>
           </NavLink>
         </div>
-        <div>
-          <NavLink to="/register">Register New Account ?</NavLink>
+        <div classNam="form__text">
+          <NavLink to="/register" className="form__text--link">
+            Register New Account ?
+          </NavLink>
         </div>
       </Form>
     </div>

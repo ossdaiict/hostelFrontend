@@ -154,7 +154,7 @@ class SnailMail extends React.Component {
     ];
 
     return (
-      <div className="table-data">
+      <div className="table-data" style={this.props.styled}>
         <Table
           columns={columns}
           data={this.state.data}
