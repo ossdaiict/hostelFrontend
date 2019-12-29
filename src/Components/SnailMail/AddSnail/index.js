@@ -13,12 +13,12 @@ const AddSnail = ({ errors, touched, handleSubmit, isSubmitting }) => (
           </label>
           <Field
             type="id"
-            name="studentId"
+            name="sID"
             placeholder="Student ID"
             className="form__input"
           />
-          {touched.studentId && errors.studentId && (
-            <div className="form__error">{errors.studentId}</div>
+          {touched.sID && errors.sID && (
+            <div className="form__error">{errors.sID}</div>
           )}
         </div>
         <div className="form__wrapper">
@@ -134,7 +134,7 @@ const AddSnail = ({ errors, touched, handleSubmit, isSubmitting }) => (
 
 const FormikEnhance = withFormik({
   mapPropsToValues: ({
-    studentId,
+    sID,
     name,
     room,
     cdate,
@@ -144,7 +144,7 @@ const FormikEnhance = withFormik({
     type
   }) => {
     return {
-      studentId: studentId || "",
+      sID: sID || "",
       name: name || "",
       room: room || "",
       cdate: cdate || "",
@@ -155,7 +155,7 @@ const FormikEnhance = withFormik({
     };
   },
   validationSchema: Yup.object().shape({
-    studentId: Yup.number("Student ID must be number")
+    sID: Yup.number("Student ID must be number")
       .required("Student ID is required")
       .positive("ID must be positive")
       .integer("ID must be integer")
@@ -177,11 +177,9 @@ const FormikEnhance = withFormik({
     type: Yup.string()
   }),
   handleSubmit: (values, { resetForm, setSubmitting, setErrors }) => {
-    setTimeout(() => {
-      console.log(values);
-      resetForm();
-      setSubmitting(false);
-    }, 2000);
+    console.log(values);
+    resetForm();
+    setSubmitting(false);
   }
 })(AddSnail);
 

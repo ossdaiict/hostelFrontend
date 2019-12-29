@@ -100,15 +100,9 @@ const FormikEnhance = withFormik({
       .min(6, "Password must be 6 charactures long")
   }),
   handleSubmit: (values, { resetForm, setSubmitting, setErrors }) => {
-    setTimeout(() => {
-      if (values.email === "parth@gmail.com") {
-        setErrors({ email: "This is already taken" });
-      } else {
-        console.log(values);
-        resetForm();
-      }
-      setSubmitting(false);
-    }, 2000);
+    console.log(values);
+    resetForm();
+    setSubmitting(false);
   }
 })(LoginForm);
 

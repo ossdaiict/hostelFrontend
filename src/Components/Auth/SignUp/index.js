@@ -169,11 +169,9 @@ const FormikEnhance = withFormik({
       .min(6, "Password must be 6 digit long")
   }),
   handleSubmit: (values, { resetForm, setSubmitting, setErrors }) => {
-    setTimeout(() => {
-      console.log(values);
-      resetForm();
-      setSubmitting(false);
-    }, 2000);
+    console.log(values);
+    resetForm();
+    setSubmitting(false);
   }
 })(SignUp);
 
