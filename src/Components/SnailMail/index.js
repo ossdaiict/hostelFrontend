@@ -2,20 +2,61 @@ import React from "react";
 import { useTable, useGlobalFilter } from "react-table";
 import "./style.scss";
 
+import { connect } from "react-redux";
+import { GET_ERRORS } from "../../Store/type";
+
+import axios from "axios";
+
 class SnailMail extends React.Component {
   state = {
     data: []
   };
 
   componentDidMount() {
-    const snailData = require("./fakeData");
-    this.setState({
-      data: snailData.default
-    });
+    // const data = require("./fakeData");
+    // console.log(data.default);
+
+    // this.setState({
+    //   data: data.default
+    // });
+    axios
+      .get("http://localhost:5000/courier")
+      .then(res => {
+        this.setState({
+          data: res.data
+        });
+      })
+      .catch(err => {
+        this.props.dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      });
   }
 
-  handleDelete = rowProps => {
-    console.log(rowProps);
+  handleDelete = (sID, cID) => {
+    axios
+      .post("http://localhost:5000/courier/delete", { sID, cID })
+      .then(res => {
+        this.setState({
+          data: this.state.data.filter(courier => {
+            return !(courier.sID === sID && courier.cID === cID);
+          })
+        });
+      })
+      .catch(err => {
+        this.props.dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      });
+    // let newData = this.state.data.filter(courier => {
+    //   return !(courier.sid === sID && courier.cnumber === cID);
+    // });
+    // console.log(newData, cID, sID);
+    // this.setState({
+    //   data: newData
+    // });
   };
 
   render() {
@@ -115,31 +156,31 @@ class SnailMail extends React.Component {
     const columns = [
       {
         Header: "Student ID",
-        accessor: "sid"
+        accessor: "sID"
       },
       {
         Header: "Name",
-        accessor: "title"
+        accessor: "name"
       },
       {
         Header: "Date",
-        accessor: "date"
+        accessor: "cdate"
       },
       {
         Header: "Courier Name",
-        accessor: "ccompany"
+        accessor: "service"
       },
       {
         Header: "Courier ID",
-        accessor: "cnumber"
+        accessor: "cID"
       },
       {
         Header: "Room No.",
-        accessor: "roomno"
+        accessor: "room"
       },
       {
         Header: "Given By",
-        accessor: "givenby"
+        accessor: "givenBy"
       },
       {
         Header: "Type",
@@ -159,7 +200,8 @@ class SnailMail extends React.Component {
           columns={columns}
           data={this.state.data}
           getCellProps={cell => ({
-            onClick: () => this.handleDelete(cell.row.original.sid)
+            onClick: () =>
+              this.handleDelete(cell.row.original.sID, cell.row.original.cID)
           })}
         />
       </div>
@@ -167,4 +209,4 @@ class SnailMail extends React.Component {
   }
 }
 
-export default SnailMail;
+export default connect()(SnailMail);

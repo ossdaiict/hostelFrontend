@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 
 import HomePage from "../Components/HomePage";
 import NavBar from "../Components/NavBar";
@@ -8,6 +8,8 @@ import Policies from "../Components/Policies";
 import SnailMail from "../Components/SnailMail";
 import Login from "../Components/Auth/Login";
 import SignUp from "../Components/Auth/SignUp";
+
+import PrivateRoute from "../Utils/PrivateRouter";
 
 import "./style.scss";
 
@@ -21,9 +23,9 @@ const RouterPage = () => {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <Route path="/dashboard">
+        <PrivateRoute path="/dashboard">
           <Dashboard />
-        </Route>
+        </PrivateRoute>
         <Route path="/policies">
           <Policies />
         </Route>
@@ -41,4 +43,4 @@ const RouterPage = () => {
   );
 };
 
-export default RouterPage;
+export default withRouter(RouterPage);

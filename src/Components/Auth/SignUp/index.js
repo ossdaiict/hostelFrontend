@@ -1,6 +1,9 @@
 import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { registerUser } from "../../../Store/Actions/authAction";
 
 const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
   <div className="form" style={{ height: "88vh", overflowY: "scroll" }}>
@@ -15,12 +18,12 @@ const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
           </label>
           <Field
             type="id"
-            name="studentId"
+            name="sID"
             placeholder="Student ID"
             className="form__input"
           />
-          {touched.studentId && errors.studentId && (
-            <div className="form__error">{errors.studentId}</div>
+          {touched.sID && errors.sID && (
+            <div className="form__error">{errors.sID}</div>
           )}
         </div>
       </div>
@@ -118,7 +121,6 @@ const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
           )}
         </div>
       </div>
-
       <button
         disabled={isSubmitting}
         type="submit"
@@ -130,49 +132,54 @@ const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
   </div>
 );
 
-const FormikEnhance = withFormik({
-  mapPropsToValues: ({ studentId, fname, lname, room, wing, password }) => {
-    return {
-      studentId: studentId || "",
-      fname: fname || "",
-      lname: lname || "",
-      wing: wing || "",
-      room: room || "",
-      password: password || ""
-    };
-  },
-  validationSchema: Yup.object().shape({
-    studentId: Yup.number("Student ID must be number")
-      .required("Student ID is required")
-      .positive("ID must be positive")
-      .integer("ID must be integer")
-      .test("length", "Student ID must be exactly 9 digits", val => {
-        if (val) {
-          return val.toString().length === 9;
-        }
-      })
-      .min(200000000, "Invalide ID")
-      .max(209909999, "Invalide ID"),
-    fname: Yup.string()
-      .required("First name is required")
-      .max(20),
-    lname: Yup.string()
-      .required("Last name is required")
-      .max(20),
-    room: Yup.number("Room No must be number")
-      .required("Room No. is required")
-      .min(100)
-      .max(999),
-    wing: Yup.string().required("Wing is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be 6 digit long")
-  }),
-  handleSubmit: (values, { resetForm, setSubmitting, setErrors }) => {
-    console.log(values);
-    resetForm();
-    setSubmitting(false);
-  }
-})(SignUp);
+const FormikEnhance = withRouter(
+  withFormik({
+    mapPropsToValues: ({ sID, fname, lname, room, wing, password }) => {
+      return {
+        sID: sID || "",
+        fname: fname || "",
+        lname: lname || "",
+        wing: wing || "",
+        room: room || "",
+        password: password || ""
+      };
+    },
+    validationSchema: Yup.object().shape({
+      sID: Yup.number("Student ID must be number")
+        .required("Student ID is required")
+        .positive("ID must be positive")
+        .integer("ID must be integer")
+        .test("length", "Student ID must be exactly 9 digits", val => {
+          if (val) {
+            return val.toString().length === 9;
+          }
+        })
+        .min(200000000, "Invalide ID")
+        .max(209909999, "Invalide ID"),
+      fname: Yup.string()
+        .required("First name is required")
+        .max(20),
+      lname: Yup.string()
+        .required("Last name is required")
+        .max(20),
+      room: Yup.number("Room No must be number")
+        .required("Room No. is required")
+        .min(100)
+        .max(999),
+      wing: Yup.string().required("Wing is required"),
+      password: Yup.string()
+        .required("Password is required")
+        .min(6, "Password must be 6 digit long")
+    }),
+    handleSubmit: (
+      values,
+      { resetForm, setSubmitting, setErrors, ...formikBag }
+    ) => {
+      formikBag.props.registerUser(values, formikBag.props.history);
+      resetForm();
+      setSubmitting(false);
+    }
+  })(SignUp)
+);
 
-export default FormikEnhance;
+export default connect(null, { registerUser })(FormikEnhance);

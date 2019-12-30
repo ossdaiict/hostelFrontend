@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-
+import { connect } from "react-redux";
+import { logoutUser } from "../../Store/Actions/authAction";
 import "./style.scss";
 import BackDrop from "./BackDrop";
 import SideDrawer from "./SideDrawer";
@@ -16,6 +17,10 @@ class NavBar extends React.Component {
         isSideDrawerOpen: !prevProps.isSideDrawerOpen
       };
     });
+  };
+
+  handleLogOut = () => {
+    this.props.logoutUser();
   };
 
   render() {
@@ -62,15 +67,31 @@ class NavBar extends React.Component {
           </ul>
           <SideDrawer isSideDrawerOpen={this.state.isSideDrawerOpen} />
           {backDrop}
-          <NavLink to="/login" className="user-navbar">
-            <div className="user-navbar__login">
-              <span className="user-navbar__login--text">Login</span>
+          {!this.props.isAuthenticated ? (
+            <NavLink to="/login" className="user-navbar">
+              <div className="user-navbar__login">
+                <span className="user-navbar__login--text">Login</span>
+              </div>
+            </NavLink>
+          ) : (
+            <div
+              className="user-navbar"
+              onClick={this.handleLogOut}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="user-navbar__login">
+                <span className="user-navbar__login--text">LogOut</span>
+              </div>
             </div>
-          </NavLink>
+          )}
         </div>
       </nav>
     );
   }
 }
 
-export default withRouter(NavBar);
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default withRouter(connect(mapStateToProps, { logoutUser })(NavBar));

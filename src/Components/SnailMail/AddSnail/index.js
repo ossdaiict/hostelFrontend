@@ -1,6 +1,9 @@
 import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { connect } from "react-redux";
+import { GET_ERRORS } from "../../../Store/type";
 
 const AddSnail = ({ errors, touched, handleSubmit, isSubmitting }) => (
   <div className="form">
@@ -176,11 +179,23 @@ const FormikEnhance = withFormik({
     givenBy: Yup.string(),
     type: Yup.string()
   }),
-  handleSubmit: (values, { resetForm, setSubmitting, setErrors }) => {
-    console.log(values);
-    resetForm();
-    setSubmitting(false);
+  handleSubmit: (
+    values,
+    { resetForm, setSubmitting, setErrors, ...formikBag }
+  ) => {
+    axios
+      .post("http://localhost:5000/courier/add", values)
+      .then(res => {
+        resetForm();
+        setSubmitting(false);
+      })
+      .catch(err => {
+        formikBag.props.dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      });
   }
 })(AddSnail);
 
-export default FormikEnhance;
+export default connect()(FormikEnhance);
