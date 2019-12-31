@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { connect } from "react-redux";
 import { GET_ERRORS } from "../../../Store/type";
+import { toast } from "react-toastify";
 
 const AddSnail = ({ errors, touched, handleSubmit, isSubmitting }) => (
   <div className="form">
@@ -188,12 +189,14 @@ const FormikEnhance = withFormik({
       .then(res => {
         resetForm();
         setSubmitting(false);
+        toast.info(`${res.data.message}`);
       })
       .catch(err => {
         formikBag.props.dispatch({
           type: GET_ERRORS,
           payload: err.response.data
         });
+        toast.error(`${err.response.data.message}`);
       });
   }
 })(AddSnail);

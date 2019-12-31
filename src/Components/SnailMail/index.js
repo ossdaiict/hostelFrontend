@@ -4,6 +4,7 @@ import "./style.scss";
 
 import { connect } from "react-redux";
 import { GET_ERRORS } from "../../Store/type";
+import { toast } from "react-toastify";
 
 import axios from "axios";
 
@@ -43,12 +44,14 @@ class SnailMail extends React.Component {
             return !(courier.sID === sID && courier.cID === cID);
           })
         });
+        toast.info(`${res.data.message}`);
       })
       .catch(err => {
         this.props.dispatch({
           type: GET_ERRORS,
           payload: err.response.data
         });
+        toast.error(`${err.response.data.message}`);
       });
     // let newData = this.state.data.filter(courier => {
     //   return !(courier.sid === sID && courier.cnumber === cID);

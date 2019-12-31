@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../../Utils/SetAuthToken";
-
+import { toast } from "react-toastify";
 import {
   GET_ERRORS,
   SET_CURRENT_USER,
@@ -12,13 +12,17 @@ import {
 export const registerUser = (userData, history) => dispatch => {
   axios
     .post("http://localhost:5000/auth/signup", userData)
-    .then(res => history.push("/login"))
-    .catch(err =>
+    .then(res => {
+      toast.info(`${res.data.message}`);
+      history.push("/login");
+    })
+    .catch(err => {
+      toast.error(`${err.response.data.message}`);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 // Login - Get User Token
@@ -40,13 +44,16 @@ export const loginUser = (userData, history, from) => dispatch => {
       dispatch(setCurrentUser(user));
 
       history.replace(from);
+
+      toast.info(`${res.data.message}`);
     })
-    .catch(err =>
+    .catch(err => {
+      toast.error(`${err.response.data.message}`);
       dispatch({
         type: GET_ERRORS,
         payload: err.response.data
-      })
-    );
+      });
+    });
 };
 
 // Set logged in user
