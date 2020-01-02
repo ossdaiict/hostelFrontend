@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, Route, Switch, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 import AddSnail from "../SnailMail/AddSnail";
 import SnailMail from "../SnailMail";
@@ -7,6 +8,7 @@ import SnailMail from "../SnailMail";
 class Dashboard extends Component {
   render() {
     const { url, path } = this.props.match;
+    console.log(this.props.isLoading);
     return (
       <div className="policy-page">
         <div className="side-navbar">
@@ -42,4 +44,8 @@ class Dashboard extends Component {
   }
 }
 
-export default withRouter(Dashboard);
+const mapStateToProps = state => ({
+  isLoading: state.auth.isLoading
+});
+
+export default connect(mapStateToProps)(withRouter(Dashboard));

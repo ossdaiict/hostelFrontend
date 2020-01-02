@@ -8,6 +8,7 @@ import Policies from "../Components/Policies";
 import SnailMail from "../Components/SnailMail";
 import Login from "../Components/Auth/Login";
 import SignUp from "../Components/Auth/SignUp";
+import ForgotPassword from "../Components/Auth/ForgotPassword";
 
 import PrivateRoute from "../Utils/PrivateRouter";
 
@@ -23,9 +24,12 @@ const RouterPage = () => {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        <PrivateRoute path="/dashboard">
+        {/* <PrivateRoute path="/dashboard">
           <Dashboard />
-        </PrivateRoute>
+        </PrivateRoute> */}
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
         <Route path="/policies">
           <Policies />
         </Route>
@@ -37,6 +41,9 @@ const RouterPage = () => {
         </Route>
         <Route path="/register">
           <SignUp />
+        </Route>
+        <Route path="/forgot-password">
+          <ForgotPassword />
         </Route>
       </Switch>
     </div>

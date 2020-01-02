@@ -28,10 +28,15 @@ class SnailMail extends React.Component {
         });
       })
       .catch(err => {
-        this.props.dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
-        });
+        if (typeof err.response !== undefined) {
+          toast.error(`Unable to fetch the data!..`);
+        } else {
+          this.props.dispatch({
+            type: GET_ERRORS,
+            payload: err.response.data
+          });
+          toast.error(`${err.response.data.message}`);
+        }
       });
   }
 
