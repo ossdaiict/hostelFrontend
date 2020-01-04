@@ -2,6 +2,8 @@ import React from "react";
 import { useTable, useFilters } from "react-table";
 import axios from "axios";
 import "./style.scss";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import { toast } from "react-toastify";
 
 class Complaint extends React.Component {
   state = {
@@ -11,7 +13,7 @@ class Complaint extends React.Component {
   componentDidMount() {
     axios
       .post("http://localhost:5000/complaint", {
-        query: {}
+        query: { isResolve: false }
       })
       .then(res => {
         this.setState({
@@ -23,15 +25,28 @@ class Complaint extends React.Component {
       });
   }
 
-  handleData(rowsProp) {
-    rowsProp.map(row => {
-      console.log(row.original);
-    });
-  }
+  // handleData(rowsProp) {
+  //   rowsProp.map(row => {
+  //     console.log(row.original);
+  //   });
+  // }
 
   handleResolve(cellProp) {
     const { _id, sID } = cellProp.row.original;
     console.log(_id, sID);
+    axios
+      .post("http://localhost:5000/complaint/resolve", { _id, sID })
+      .then(res => {
+        this.setState({
+          data: this.state.data.filter(complaint => {
+            return !(complaint.sID === sID && complaint._id === _id);
+          })
+        });
+        toast.info(`${res.data.message}`);
+      })
+      .catch(err => {
+        toast.error(`${err.response.data.message}`);
+      });
   }
 
   render() {
@@ -133,7 +148,7 @@ class Complaint extends React.Component {
 
       return (
         <>
-          <table {...getTableProps()}>
+          <table id="table-to-xls" {...getTableProps()}>
             <thead>
               {headerGroups.map(headerGroup => (
                 <tr {...headerGroup.getHeaderGroupProps()}>
@@ -169,13 +184,21 @@ class Complaint extends React.Component {
                   </tr>
                 );
               })}
-              <button
+              {/* <button
                 className="login-form__submit"
                 onClick={() => this.handleData(rows)}
                 style={{ margin: "2rem" }}
               >
                 Export data
-              </button>
+              </button> */}
+              <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="login-form__submit"
+                table="table-to-xls"
+                filename="Complaints"
+                sheet="tablexls"
+                buttonText="Export data"
+              />
             </tbody>
           </table>
           <br />
@@ -192,14 +215,14 @@ class Complaint extends React.Component {
         accessor: "initialDate"
       },
       {
-        Header: "Room",
-        accessor: "room"
-      },
-      {
         Header: "Wing",
         accessor: "wing",
         Filter: SelectColumnFilter,
         filter: "includes"
+      },
+      {
+        Header: "Room",
+        accessor: "room"
       },
       {
         Header: "Type",
