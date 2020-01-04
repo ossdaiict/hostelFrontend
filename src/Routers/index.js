@@ -9,6 +9,7 @@ import SnailMail from "../Components/SnailMail";
 import Login from "../Components/Auth/Login";
 import SignUp from "../Components/Auth/SignUp";
 import ForgotPassword from "../Components/Auth/ForgotPassword";
+import Complaint from "../Components/Complient/AddComplaint";
 
 import PrivateRoute from "../Utils/PrivateRouter";
 
@@ -42,6 +43,12 @@ const RouterPage = () => {
         <Route path="/register">
           <SignUp />
         </Route>
+        <Route path="/complaint">
+          <Complaint />
+        </Route>
+        {/* <PrivateRoute path="/complaint">
+          <Complaint />
+        </PrivateRoute> */}
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>

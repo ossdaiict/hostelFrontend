@@ -64,6 +64,11 @@ class NavBar extends React.Component {
                 Snail Mail
               </NavLink>
             </li>
+            <li className="nav-bar__link">
+              <NavLink to="/complaint" className="nav-bar__item">
+                Complaints
+              </NavLink>
+            </li>
           </ul>
           <SideDrawer isSideDrawerOpen={this.state.isSideDrawerOpen} />
           {backDrop}

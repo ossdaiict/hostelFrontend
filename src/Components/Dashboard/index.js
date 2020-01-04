@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 
 import AddSnail from "../SnailMail/AddSnail";
 import SnailMail from "../SnailMail";
+import Complaint from "../Complient";
 
 class Dashboard extends Component {
   render() {
     const { url, path } = this.props.match;
-    console.log(this.props.isLoading);
+    // console.log(this.props.isLoading);
     return (
       <div className="policy-page">
         <div className="side-navbar">
@@ -18,6 +19,9 @@ class Dashboard extends Component {
           <NavLink to={`${url}/snailmail`} className="side-navbar__item">
             Snail Mail
           </NavLink>
+          <NavLink to={`${url}/complaints`} className="side-navbar__item">
+            Complaints
+          </NavLink>
         </div>
         <div className="policies">
           <Switch>
@@ -26,6 +30,9 @@ class Dashboard extends Component {
             </Route>
             <Route path={`${path}/snailmail`}>
               <SnailMail isAdmin={true} />
+            </Route>
+            <Route path={`${path}/complaints`}>
+              <Complaint />
             </Route>
 
             {/* <Route path={`${path}/computer`}>

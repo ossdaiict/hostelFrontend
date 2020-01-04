@@ -64,6 +64,11 @@ const SideDrawer = props => {
               Snail Mail
             </NavLink>
           </li>
+          <li className="side-drawer__link">
+            <NavLink to="/complaint" className="side-drawer__item">
+              Complaint
+            </NavLink>
+          </li>
         </Accordion>
       </ul>
     </div>

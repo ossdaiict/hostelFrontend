@@ -1,0 +1,35 @@
+.table-data {
+  table {
+    th,
+    td {
+      max-width: 14rem;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    td {
+      overflow: auto;
+      white-space: nowrap;
+    }
+    th {
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 0.5rem;
+    }
+  }
+  .button__resolve {
+    padding: 0.8rem;
+    border-radius: 1rem;
+    outline: none;
+    border: none;
+    background-color: var(--color-grey-light-4);
+    font-size: 1.5rem;
+    // color: white;
+    cursor: pointer;
+  }
+  ::-webkit-scrollbar {
+    height: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(221, 221, 221, 0.678);
+  }
+}
