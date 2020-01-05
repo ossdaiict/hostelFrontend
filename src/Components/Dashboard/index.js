@@ -5,45 +5,60 @@ import { connect } from "react-redux";
 import AddSnail from "../SnailMail/AddSnail";
 import SnailMail from "../SnailMail";
 import Complaint from "../Complient";
+import ResolveComplaint from "../Complient/ResolveComplaint";
 
 class Dashboard extends Component {
   render() {
     const { url, path } = this.props.match;
-    // console.log(this.props.isLoading);
+
     return (
       <div className="policy-page">
-        <div className="side-navbar">
-          <NavLink to={`${url}/add-snail`} className="side-navbar__item">
-            Add Snail
-          </NavLink>
-          <NavLink to={`${url}/snailmail`} className="side-navbar__item">
-            Snail Mail
-          </NavLink>
-          <NavLink to={`${url}/complaints`} className="side-navbar__item">
-            Complaints
-          </NavLink>
-        </div>
+        {this.props.user.isSupervisor ? (
+          <div className="side-navbar">
+            <NavLink to={`${url}/add-snail`} className="side-navbar__item">
+              Add Snail
+            </NavLink>
+            <NavLink to={`${url}/snailmail`} className="side-navbar__item">
+              Snail Mail
+            </NavLink>
+            <NavLink to={`${url}/complaints`} className="side-navbar__item">
+              Complaints
+            </NavLink>
+            <NavLink
+              to={`${url}/resolve-complaints`}
+              className="side-navbar__item"
+            >
+              Solved Com.
+            </NavLink>
+          </div>
+        ) : (
+          <div className="side-navbar">
+            <NavLink to={`${url}/complaints`} className="side-navbar__item">
+              Complaints
+            </NavLink>
+          </div>
+        )}
+
         <div className="policies">
           <Switch>
-            <Route path={`${path}/add-snail`}>
-              <AddSnail />
-            </Route>
-            <Route path={`${path}/snailmail`}>
-              <SnailMail isAdmin={true} />
-            </Route>
+            {this.props.user.isSupervisor && (
+              <Route path={`${path}/add-snail`}>
+                <AddSnail />
+              </Route>
+            )}
+            {this.props.user.isSupervisor && (
+              <Route path={`${path}/snailmail`}>
+                <SnailMail isAdmin={true} />
+              </Route>
+            )}
             <Route path={`${path}/complaints`}>
               <Complaint />
             </Route>
-
-            {/* <Route path={`${path}/computer`}>
-              <PolicyPage page="./Rules2.md" />
-            </Route>
-            <Route path={`${path}/cooler`}>
-              <PolicyPage page="./Rules3.md" />
-            </Route>
-            <Route path={`${path}/snailmail`}>
-              <PolicyPage page="./Procedures.md" />
-            </Route> */}
+            {this.props.user.isSupervisor && (
+              <Route path={`${path}/resolve-complaints`}>
+                <ResolveComplaint />
+              </Route>
+            )}
           </Switch>
         </div>
       </div>
@@ -52,7 +67,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.auth.isLoading
+  user: state.auth.user
 });
 
 export default connect(mapStateToProps)(withRouter(Dashboard));

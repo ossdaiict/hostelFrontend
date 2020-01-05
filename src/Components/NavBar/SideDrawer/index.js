@@ -17,6 +17,17 @@ const SideDrawer = props => {
     </div>
   );
 
+  const Dashboard = (
+    <div className="accordion__title">
+      <span className="accordion__title--text">Dashboard</span>
+      <img
+        src={Navigation}
+        alt="Navigation"
+        className="accordion__title--logo"
+      />
+    </div>
+  );
+
   return (
     <div
       className={!props.isSideDrawerOpen ? "side-drawer" : "side-drawer open"}
@@ -28,11 +39,17 @@ const SideDrawer = props => {
               Home
             </NavLink>
           </li>
-          <li className="side-drawer__link">
-            <NavLink to="/dashboard" className="side-drawer__item">
-              Dashboard
-            </NavLink>
-          </li>
+          <AccordionItem
+            title={Dashboard}
+            className="accordion__items"
+            expandedClassName="rotate"
+          >
+            <li className="accordion__link">
+              <NavLink to="/dashboard/complaints" className="accordion__item">
+                Complaints
+              </NavLink>
+            </li>
+          </AccordionItem>
           <AccordionItem
             title={PolicyTitle}
             className="accordion__items"

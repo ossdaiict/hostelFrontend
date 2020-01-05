@@ -25,12 +25,12 @@ const RouterPage = () => {
         <Route path="/" exact>
           <HomePage />
         </Route>
-        {/* <PrivateRoute path="/dashboard">
+        <PrivateRoute path="/dashboard">
           <Dashboard />
-        </PrivateRoute> */}
-        <Route path="/dashboard">
+        </PrivateRoute>
+        {/* <Route path="/dashboard">
           <Dashboard />
-        </Route>
+        </Route> */}
         <Route path="/policies">
           <Policies />
         </Route>
@@ -43,12 +43,12 @@ const RouterPage = () => {
         <Route path="/register">
           <SignUp />
         </Route>
-        <Route path="/complaint">
+        {/* <Route path="/complaint">
           <Complaint />
-        </Route>
-        {/* <PrivateRoute path="/complaint">
+        </Route> */}
+        <PrivateRoute path="/complaint">
           <Complaint />
-        </PrivateRoute> */}
+        </PrivateRoute>
         <Route path="/forgot-password">
           <ForgotPassword />
         </Route>

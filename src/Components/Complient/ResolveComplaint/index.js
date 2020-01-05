@@ -1,33 +1,19 @@
 import React from "react";
 import axios from "axios";
-import "./style.scss";
+import "../style.scss";
 import { toast } from "react-toastify";
-import ComplaintTable from "./ComplaintTable";
-import { connect } from "react-redux";
+import ComplaintTable from "../ComplaintTable";
 
-class Complaint extends React.Component {
+class ResolveComplaint extends React.Component {
   state = {
     data: []
   };
 
   componentDidMount() {
-    let query;
-
-    if (this.props.user.isSupervisor) {
-      query = {
-        isValid: true
-      };
-    } else if (this.props.user.isHMC) {
-      query = {
-        isValid: true,
-        wing: this.props.user.wing
-      };
-    } else {
-      query = { isValid: true, sID: this.props.user.sID };
-    }
-
     axios
-      .post("http://localhost:5000/complaint", { query })
+      .post("http://localhost:5000/complaint", {
+        query: { isValid: false, isResolve: true }
+      })
       .then(res => {
         this.setState({
           data: res.data
@@ -39,30 +25,6 @@ class Complaint extends React.Component {
         } else {
           toast.error(`${err.response.data.message}`);
         }
-      });
-  }
-
-  // handleData(rowsProp) {
-  //   rowsProp.map(row => {
-  //     console.log(row.original);
-  //   });
-  // }
-
-  handleResolve(cellProp) {
-    const { _id, sID } = cellProp.row.original;
-    console.log(_id, sID);
-    axios
-      .post("http://localhost:5000/complaint/resolve", { _id, sID })
-      .then(res => {
-        this.setState({
-          data: this.state.data.filter(complaint => {
-            return !(complaint.sID === sID && complaint._id === _id);
-          })
-        });
-        toast.info(`${res.data.message}`);
-      })
-      .catch(err => {
-        toast.error(`${err.response.data.message}`);
       });
   }
 
@@ -134,30 +96,15 @@ class Complaint extends React.Component {
       {
         Header: "Re-Open Date",
         accessor: "reOpenDate"
-      },
-      {
-        Header: "Action",
-        accessor: "action",
-        Cell: () => <button className="button__resolve">Resolve</button>
       }
     ];
 
     return (
       <div className="table-data" style={this.props.styled}>
-        <ComplaintTable
-          columns={columns}
-          data={this.state.data}
-          getCellProps={cell => ({
-            onClick: () => this.handleResolve(cell)
-          })}
-        />
+        <ComplaintTable columns={columns} data={this.state.data} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  user: state.auth.user
-});
-
-export default connect(mapStateToProps)(Complaint);
+export default ResolveComplaint;
