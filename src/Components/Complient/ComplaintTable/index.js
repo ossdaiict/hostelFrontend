@@ -1,9 +1,10 @@
 import React from "react";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { useTable, useFilters } from "react-table";
+import { connect } from "react-redux";
 
 const ComplaintTable = props => {
-  const { columns, data, getCellProps } = props;
+  const { columns, data, getCellProps, isSupervisor } = props;
 
   const DefaultColumnFilter = ({ column: { filterValue, setFilter } }) => {
     return (
@@ -111,14 +112,16 @@ const ComplaintTable = props => {
               >
                 Export data
               </button> */}
-            <ReactHTMLTableToExcel
-              id="test-table-xls-button"
-              className="login-form__submit"
-              table="table-to-xls"
-              filename="Complaints"
-              sheet="tablexls"
-              buttonText="Export data"
-            />
+            {isSupervisor ? (
+              <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="login-form__submit"
+                table="table-to-xls"
+                filename="Complaints"
+                sheet="tablexls"
+                buttonText="Export data"
+              />
+            ) : null}
           </tbody>
         </table>
         <br />
@@ -129,4 +132,8 @@ const ComplaintTable = props => {
   return <Table columns={columns} data={data} getCellProps={getCellProps} />;
 };
 
-export default ComplaintTable;
+const mapStateToProps = state => ({
+  isSupervisor: state.auth.user.isSupervisor
+});
+
+export default connect(mapStateToProps)(ComplaintTable);

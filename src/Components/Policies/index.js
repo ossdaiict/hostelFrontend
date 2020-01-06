@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { NavLink, Route, Switch, withRouter } from "react-router-dom";
 
 import PolicyPage from "./PolicyFiles";
+import NotFoundPage from "../NotFound";
 
 import "./style.scss";
 
@@ -37,6 +38,9 @@ class Policies extends Component {
             </Route>
             <Route path={`${path}/snailmail`}>
               <PolicyPage page="./Procedures.md" />
+            </Route>
+            <Route path={`${path}/*`}>
+              <NotFoundPage />
             </Route>
           </Switch>
         </div>

@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
-import { GET_ERRORS } from "../../../Store/type";
+
 // import { registerUser } from "../../../Store/Actions/authAction";
 
 const SignUp = ({ errors, touched, handleSubmit, isSubmitting, values }) => (
@@ -119,11 +119,11 @@ const FormikEnhance = withRouter(
           toast.info(`${res.data.message}`);
         })
         .catch(err => {
-          formikBag.props.dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          });
-          toast.error(`${err.response.data.message}`);
+          if (typeof err.response !== undefined) {
+            toast.error(`Unable to add the complaint!..`);
+          } else {
+            toast.error(`${err.response.data.message}`);
+          }
         });
     }
   })(SignUp)

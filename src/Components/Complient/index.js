@@ -62,7 +62,11 @@ class Complaint extends React.Component {
         toast.info(`${res.data.message}`);
       })
       .catch(err => {
-        toast.error(`${err.response.data.message}`);
+        if (typeof err.response !== undefined) {
+          toast.error(`Unable to resolve!..`);
+        } else {
+          toast.error(`${err.response.data.message}`);
+        }
       });
   }
 

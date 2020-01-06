@@ -19,6 +19,12 @@ class NavBar extends React.Component {
     });
   };
 
+  handleSideDrawerClose = () => {
+    this.setState({
+      isSideDrawerOpen: false
+    });
+  };
+
   handleLogOut = () => {
     this.props.logoutUser();
   };
@@ -33,7 +39,7 @@ class NavBar extends React.Component {
     );
     let backDrop;
     if (this.state.isSideDrawerOpen) {
-      backDrop = <BackDrop handleSideDrawer={this.handleSideDrawer} />;
+      backDrop = <BackDrop handleSideDrawer={this.handleSideDrawerClose} />;
     }
     return (
       <nav
@@ -70,8 +76,12 @@ class NavBar extends React.Component {
               </NavLink>
             </li>
           </ul>
-          <SideDrawer isSideDrawerOpen={this.state.isSideDrawerOpen} />
+          <SideDrawer
+            isSideDrawerOpen={this.state.isSideDrawerOpen}
+            handleSideDrawerClose={this.handleSideDrawerClose}
+          />
           {backDrop}
+
           {!this.props.isAuthenticated ? (
             <NavLink to="/login" className="user-navbar">
               <div className="user-navbar__login">

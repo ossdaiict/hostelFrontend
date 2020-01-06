@@ -6,6 +6,7 @@ import AddSnail from "../SnailMail/AddSnail";
 import SnailMail from "../SnailMail";
 import Complaint from "../Complient";
 import ResolveComplaint from "../Complient/ResolveComplaint";
+import NotFoundPage from "../NotFound";
 
 class Dashboard extends Component {
   render() {
@@ -59,6 +60,9 @@ class Dashboard extends Component {
                 <ResolveComplaint />
               </Route>
             )}
+            <Route path={`${path}/*`}>
+              <NotFoundPage />
+            </Route>
           </Switch>
         </div>
       </div>

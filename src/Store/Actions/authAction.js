@@ -1,12 +1,7 @@
 import axios from "axios";
 import setAuthToken from "../../Utils/SetAuthToken";
 import { toast } from "react-toastify";
-import {
-  GET_ERRORS,
-  SET_CURRENT_USER,
-  LOADING_USER,
-  LOGOUT_USER
-} from "../type";
+import { SET_CURRENT_USER, LOADING_USER, LOGOUT_USER } from "../type";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
@@ -17,11 +12,11 @@ export const registerUser = (userData, history) => dispatch => {
       history.push("/login");
     })
     .catch(err => {
-      toast.error(`${err.response.data.message}`);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (typeof err.response !== undefined) {
+        toast.error(`Unable to register!..`);
+      } else {
+        toast.error(`${err.response.data.message}`);
+      }
     });
 };
 
@@ -48,11 +43,11 @@ export const loginUser = (userData, history, from) => dispatch => {
       toast.info(`${res.data.message}`);
     })
     .catch(err => {
-      toast.error(`${err.response.data.message}`);
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      });
+      if (typeof err.response !== undefined) {
+        toast.error(`Unable to login!..`);
+      } else {
+        toast.error(`${err.response.data.message}`);
+      }
     });
 };
 

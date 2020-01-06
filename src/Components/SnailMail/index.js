@@ -1,9 +1,6 @@
 import React from "react";
 import { useTable, useGlobalFilter } from "react-table";
 import "./style.scss";
-
-import { connect } from "react-redux";
-import { GET_ERRORS } from "../../Store/type";
 import { toast } from "react-toastify";
 
 import axios from "axios";
@@ -29,12 +26,8 @@ class SnailMail extends React.Component {
       })
       .catch(err => {
         if (typeof err.response !== undefined) {
-          toast.error(`Unable to fetch the data!..`);
+          toast.error(`Unable to fetch the snails!..`);
         } else {
-          this.props.dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          });
           toast.error(`${err.response.data.message}`);
         }
       });
@@ -52,11 +45,11 @@ class SnailMail extends React.Component {
         toast.info(`${res.data.message}`);
       })
       .catch(err => {
-        this.props.dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
-        });
-        toast.error(`${err.response.data.message}`);
+        if (typeof err.response !== undefined) {
+          toast.error(`Unable to delete the snail!..`);
+        } else {
+          toast.error(`${err.response.data.message}`);
+        }
       });
     // let newData = this.state.data.filter(courier => {
     //   return !(courier.sid === sID && courier.cnumber === cID);
@@ -217,4 +210,4 @@ class SnailMail extends React.Component {
   }
 }
 
-export default connect()(SnailMail);
+export default SnailMail;

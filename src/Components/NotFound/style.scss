@@ -1,0 +1,10 @@
+.not-found {
+  height: 88vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__text {
+    text-align: center;
+    font-size: 9.5rem;
+  }
+}

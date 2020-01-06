@@ -2,8 +2,6 @@ import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-import { connect } from "react-redux";
-import { GET_ERRORS } from "../../../Store/type";
 import { toast } from "react-toastify";
 
 const AddSnail = ({ errors, touched, handleSubmit, isSubmitting }) => (
@@ -192,13 +190,13 @@ const FormikEnhance = withFormik({
         toast.info(`${res.data.message}`);
       })
       .catch(err => {
-        formikBag.props.dispatch({
-          type: GET_ERRORS,
-          payload: err.response.data
-        });
-        toast.error(`${err.response.data.message}`);
+        if (typeof err.response !== undefined) {
+          toast.error(`Unable to add the snail!..`);
+        } else {
+          toast.error(`${err.response.data.message}`);
+        }
       });
   }
 })(AddSnail);
 
-export default connect()(FormikEnhance);
+export default FormikEnhance;

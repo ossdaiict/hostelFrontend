@@ -10,6 +10,7 @@ import Login from "../Components/Auth/Login";
 import SignUp from "../Components/Auth/SignUp";
 import ForgotPassword from "../Components/Auth/ForgotPassword";
 import Complaint from "../Components/Complient/AddComplaint";
+import NotFoundPage from "../Components/NotFound";
 
 import PrivateRoute from "../Utils/PrivateRouter";
 
@@ -51,6 +52,9 @@ const RouterPage = () => {
         </PrivateRoute>
         <Route path="/forgot-password">
           <ForgotPassword />
+        </Route>
+        <Route path="*">
+          <NotFoundPage />
         </Route>
       </Switch>
     </div>
