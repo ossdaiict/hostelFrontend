@@ -118,6 +118,11 @@ const SideDrawer = props => {
               Complaint
             </NavLink>
           </li>
+          <li className="side-drawer__link">
+            <a href="https://github.com/ossdaiict/hostel-frontend" className="side-drawer__item">
+              Contribute!
+            </a>
+          </li>
         </Accordion>
       </ul>
     </div>

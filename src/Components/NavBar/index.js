@@ -75,6 +75,9 @@ class NavBar extends React.Component {
                 Complaints
               </NavLink>
             </li>
+            <li className="nav-bar__link">
+              <a href="https://github.com/ossdaiict/hostel-frontend" className="nav-bar__item">Contribute!</a>
+            </li>
           </ul>
           <SideDrawer
             isSideDrawerOpen={this.state.isSideDrawerOpen}
@@ -89,16 +92,16 @@ class NavBar extends React.Component {
               </div>
             </NavLink>
           ) : (
-            <div
-              className="user-navbar"
-              onClick={this.handleLogOut}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="user-navbar__login">
-                <span className="user-navbar__login--text">LogOut</span>
+              <div
+                className="user-navbar"
+                onClick={this.handleLogOut}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="user-navbar__login">
+                  <span className="user-navbar__login--text">LogOut</span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
       </nav>
     );
