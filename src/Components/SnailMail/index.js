@@ -2,6 +2,9 @@ import React from "react";
 import { useTable, useGlobalFilter } from "react-table";
 import "./style.scss";
 import { toast } from "react-toastify";
+import { connect } from "react-redux";
+import { DATA_LOADING, DATA_LOADED } from "../../Store/type";
+import Loading from "../../Utils/Loading";
 
 import axios from "axios";
 
@@ -17,12 +20,14 @@ class SnailMail extends React.Component {
     // this.setState({
     //   data: data.default
     // });
+    this.props.dispatch({ type: DATA_LOADING });
     axios
       .get("http://localhost:5000/courier")
       .then(res => {
         this.setState({
           data: res.data
         });
+        this.props.dispatch({ type: DATA_LOADED });
       })
       .catch(err => {
         if (typeof err.response !== undefined) {
@@ -30,6 +35,7 @@ class SnailMail extends React.Component {
         } else {
           toast.error(`${err.response.data.message}`);
         }
+        this.props.dispatch({ type: DATA_LOADED });
       });
   }
 
@@ -197,17 +203,25 @@ class SnailMail extends React.Component {
 
     return (
       <div className="table-data" style={this.props.styled}>
-        <Table
-          columns={columns}
-          data={this.state.data}
-          getCellProps={cell => ({
-            onClick: () =>
-              this.handleDelete(cell.row.original.sID, cell.row.original.cID)
-          })}
-        />
+        {this.props.isLoading ? (
+          <Loading />
+        ) : (
+          <Table
+            columns={columns}
+            data={this.state.data}
+            getCellProps={cell => ({
+              onClick: () =>
+                this.handleDelete(cell.row.original.sID, cell.row.original.cID)
+            })}
+          />
+        )}
       </div>
     );
   }
 }
 
-export default SnailMail;
+const mapStateToProps = state => ({
+  isLoading: state.isLoading.isLoading
+});
+
+export default connect(mapStateToProps)(SnailMail);

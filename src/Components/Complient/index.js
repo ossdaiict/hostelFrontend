@@ -4,6 +4,7 @@ import "./style.scss";
 import { toast } from "react-toastify";
 import ComplaintTable from "./ComplaintTable";
 import { connect } from "react-redux";
+import Loading from "../../Utils/Loading";
 
 class Complaint extends React.Component {
   state = {
@@ -148,20 +149,25 @@ class Complaint extends React.Component {
 
     return (
       <div className="table-data" style={this.props.styled}>
-        <ComplaintTable
-          columns={columns}
-          data={this.state.data}
-          getCellProps={cell => ({
-            onClick: () => this.handleResolve(cell)
-          })}
-        />
+        {this.props.isLoading ? (
+          <Loading />
+        ) : (
+          <ComplaintTable
+            columns={columns}
+            data={this.state.data}
+            getCellProps={cell => ({
+              onClick: () => this.handleResolve(cell)
+            })}
+          />
+        )}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  isLoading: state.isLoading.isLoading
 });
 
 export default connect(mapStateToProps)(Complaint);

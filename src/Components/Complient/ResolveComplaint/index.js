@@ -3,6 +3,9 @@ import axios from "axios";
 import "../style.scss";
 import { toast } from "react-toastify";
 import ComplaintTable from "../ComplaintTable";
+import { connect } from "react-redux";
+import Loading from "../../../Utils/Loading";
+import { DATA_LOADED, DATA_LOADING } from "../../../Store/type";
 
 class ResolveComplaint extends React.Component {
   state = {
@@ -10,6 +13,7 @@ class ResolveComplaint extends React.Component {
   };
 
   componentDidMount() {
+    this.props.dispatch({ type: DATA_LOADING });
     axios
       .post("http://localhost:5000/complaint", {
         query: { isValid: false, isResolve: true }
@@ -18,6 +22,7 @@ class ResolveComplaint extends React.Component {
         this.setState({
           data: res.data
         });
+        this.props.dispatch({ type: DATA_LOADED });
       })
       .catch(err => {
         if (typeof err.response !== undefined) {
@@ -25,6 +30,7 @@ class ResolveComplaint extends React.Component {
         } else {
           toast.error(`${err.response.data.message}`);
         }
+        this.props.dispatch({ type: DATA_LOADED });
       });
   }
 
@@ -101,10 +107,18 @@ class ResolveComplaint extends React.Component {
 
     return (
       <div className="table-data" style={this.props.styled}>
-        <ComplaintTable columns={columns} data={this.state.data} />
+        {this.props.isLoading ? (
+          <Loading />
+        ) : (
+          <ComplaintTable columns={columns} data={this.state.data} />
+        )}
       </div>
     );
   }
 }
 
-export default ResolveComplaint;
+const mapStateToProps = state => ({
+  isLoading: state.isLoading.isLoading
+});
+
+export default connect(mapStateToProps)(ResolveComplaint);
