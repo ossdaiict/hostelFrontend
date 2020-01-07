@@ -3,6 +3,7 @@ import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { SERVER_URL } from "../../../Utils/constants";
 
 const AddSnail = ({ errors, touched, handleSubmit, isSubmitting }) => (
   <div className="form">
@@ -183,7 +184,7 @@ const FormikEnhance = withFormik({
     { resetForm, setSubmitting, setErrors, ...formikBag }
   ) => {
     axios
-      .post("http://localhost:5000/courier/add", values)
+      .post(`${SERVER_URL}/courier/add`, values)
       .then(res => {
         resetForm();
         setSubmitting(false);

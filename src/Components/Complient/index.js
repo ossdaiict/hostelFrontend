@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import ComplaintTable from "./ComplaintTable";
 import { connect } from "react-redux";
 import Loading from "../../Utils/Loading";
-
+import { SERVER_URL } from "../../Utils/constants";
 class Complaint extends React.Component {
   state = {
     data: []
@@ -28,7 +28,7 @@ class Complaint extends React.Component {
     }
 
     axios
-      .post("http://localhost:5000/complaint", { query })
+      .post(`${SERVER_URL}/complaint`, { query })
       .then(res => {
         this.setState({
           data: res.data
@@ -53,7 +53,7 @@ class Complaint extends React.Component {
     const { _id, sID } = cellProp.row.original;
     console.log(_id, sID);
     axios
-      .post("http://localhost:5000/complaint/resolve", { _id, sID })
+      .post(`${SERVER_URL}/complaint/resolve`, { _id, sID })
       .then(res => {
         this.setState({
           data: this.state.data.filter(complaint => {

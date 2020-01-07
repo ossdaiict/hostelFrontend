@@ -6,7 +6,7 @@ import ComplaintTable from "../ComplaintTable";
 import { connect } from "react-redux";
 import Loading from "../../../Utils/Loading";
 import { DATA_LOADED, DATA_LOADING } from "../../../Store/type";
-
+import { SERVER_URL } from "../../../Utils/constants";
 class ResolveComplaint extends React.Component {
   state = {
     data: []
@@ -15,7 +15,7 @@ class ResolveComplaint extends React.Component {
   componentDidMount() {
     this.props.dispatch({ type: DATA_LOADING });
     axios
-      .post("http://localhost:5000/complaint", {
+      .post(`${SERVER_URL}/complaint`, {
         query: { isValid: false, isResolve: true }
       })
       .then(res => {
