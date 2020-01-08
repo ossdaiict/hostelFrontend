@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import ComplaintTable from "./ComplaintTable";
 import { connect } from "react-redux";
 import Loading from "../../Utils/Loading";
+import { DATA_LOADING, DATA_LOADED } from "../../Store/type";
 
 class Complaint extends React.Component {
   state = {
@@ -26,13 +27,14 @@ class Complaint extends React.Component {
     } else {
       query = { isValid: true, sID: this.props.user.sID };
     }
-
+    this.props.dispatch({ type: DATA_LOADING });
     axios
       .post("http://localhost:5000/complaint", { query })
       .then(res => {
         this.setState({
           data: res.data
         });
+        this.props.dispatch({ type: DATA_LOADED });
       })
       .catch(err => {
         if (typeof err.response !== undefined) {
@@ -40,6 +42,7 @@ class Complaint extends React.Component {
         } else {
           toast.error(`${err.response.data.message}`);
         }
+        this.props.dispatch({ type: DATA_LOADED });
       });
   }
 

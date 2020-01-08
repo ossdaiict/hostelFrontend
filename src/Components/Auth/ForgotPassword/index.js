@@ -2,6 +2,8 @@ import React from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { withRouter } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const LoginForm = ({ errors, touched, handleSubmit, isSubmitting }) => {
   return (
@@ -61,9 +63,20 @@ const FormikEnhance = withRouter(
       values,
       { resetForm, setSubmitting, setErrors, ...formikBag }
     ) => {
-      console.log(values);
-      resetForm();
-      setSubmitting(false);
+      axios
+        .post("http://localhost:5000/auth/reset-password", values)
+        .then(res => {
+          toast.success(`${res.data.message}`);
+          resetForm();
+          setSubmitting(false);
+        })
+        .catch(err => {
+          if (typeof err.response !== undefined) {
+            toast.error(`Unable to send the mail!..`);
+          } else {
+            toast.error(`${err.response.data.message}`);
+          }
+        });
       formikBag.props.history.push("/");
     }
   })(LoginForm)
