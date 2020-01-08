@@ -105,7 +105,7 @@ const FormikEnhance = withRouter(
       const { sID, name, wing, room } = formikBag.props.user;
       const { type, complaint } = values;
       axios
-        .post("http://localhost:5000/complaint/add", {
+        .post("${API_URL}/complaint/add", {
           sID,
           name,
           wing,

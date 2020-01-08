@@ -6,6 +6,7 @@ import ComplaintTable from "./ComplaintTable";
 import { connect } from "react-redux";
 import Loading from "../../Utils/Loading";
 import { DATA_LOADING, DATA_LOADED } from "../../Store/type";
+import { SERVER_URL } from "../../Utils/constants";
 
 class Complaint extends React.Component {
   state = {
@@ -29,7 +30,7 @@ class Complaint extends React.Component {
     }
     this.props.dispatch({ type: DATA_LOADING });
     axios
-      .post("http://localhost:5000/complaint", { query })
+      .post(`${SERVER_URL}/complaint`, { query })
       .then(res => {
         this.setState({
           data: res.data
@@ -56,7 +57,7 @@ class Complaint extends React.Component {
     const { _id, sID } = cellProp.row.original;
     console.log(_id, sID);
     axios
-      .post("http://localhost:5000/complaint/resolve", { _id, sID })
+      .post(`${SERVER_URL}/complaint/resolve`, { _id, sID })
       .then(res => {
         this.setState({
           data: this.state.data.filter(complaint => {

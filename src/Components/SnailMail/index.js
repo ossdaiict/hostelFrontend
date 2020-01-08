@@ -7,6 +7,7 @@ import { DATA_LOADING, DATA_LOADED } from "../../Store/type";
 import Loading from "../../Utils/Loading";
 
 import axios from "axios";
+import { SERVER_URL } from "../../Utils/constants";
 
 class SnailMail extends React.Component {
   state = {
@@ -22,7 +23,7 @@ class SnailMail extends React.Component {
     // });
     this.props.dispatch({ type: DATA_LOADING });
     axios
-      .get("http://localhost:5000/courier")
+      .get(`${SERVER_URL}/courier`)
       .then(res => {
         this.setState({
           data: res.data
@@ -41,7 +42,7 @@ class SnailMail extends React.Component {
 
   handleDelete = (sID, cID) => {
     axios
-      .post("http://localhost:5000/courier/delete", { sID, cID })
+      .post(`${SERVER_URL}/courier/delete`, { sID, cID })
       .then(res => {
         this.setState({
           data: this.state.data.filter(courier => {

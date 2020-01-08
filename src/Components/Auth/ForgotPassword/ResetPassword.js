@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { withRouter } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { SERVER_URL } from "../../../Utils/constants";
 
 const ResetPasswordLink = ({ errors, touched, handleSubmit, isSubmitting }) => {
   return (
@@ -80,7 +81,7 @@ const FormikEnhance = withRouter(
       const { password } = values;
       axios
         .post(
-          `http://localhost:5000/auth/reset-password/${formikBag.props.match.params.token}`,
+          `${SERVER_URL}/auth/reset-password/${formikBag.props.match.params.token}`,
           { password }
         )
         .then(res => {

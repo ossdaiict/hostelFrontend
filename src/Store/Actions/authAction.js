@@ -2,11 +2,12 @@ import axios from "axios";
 import setAuthToken from "../../Utils/SetAuthToken";
 import { toast } from "react-toastify";
 import { SET_CURRENT_USER, LOADING_USER, LOGOUT_USER } from "../type";
+import { SERVER_URL } from "../../Utils/constants";
 
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("http://localhost:5000/auth/signup", userData)
+    .post(`${SERVER_URL}/auth/signup`, userData)
     .then(res => {
       toast.info(`${res.data.message}`);
       history.push("/login");
@@ -26,7 +27,7 @@ export const loginUser = (userData, history, from) => dispatch => {
     type: LOADING_USER
   });
   axios
-    .post("http://localhost:5000/auth/signin", userData)
+    .post(`${SERVER_URL}/auth/signin`, userData)
     .then(res => {
       // Save to localStorage
       const { token, user } = res.data;
